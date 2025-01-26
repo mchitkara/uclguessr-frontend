@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
@@ -332,8 +332,25 @@ function App() {
   const [option4, setOption4] = useState(data[question][options[3]])
   const [option4Color, setOption4Color]= useState("btn-secondary")
   const [score, setScore] = useState(0)
+  const [time, setTime] = useState(10)
+  const [stop, setStop] = useState(false)
+
+  useEffect(() => {
+    if (stop) {
+      return;
+    }
+    if (time <= 0) {
+      handleAnswer(0);
+      return; // Stop the timer when it reaches 0
+    }
+    const timer = setInterval(() => {
+      setTime((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer); // Cleanup interval on unmount
+  }, [time, stop]);
 
   const handleAnswer = (ans) => {
+    setStop(true);
     if (correctOption == 1) {
       setOption1Color("btn-success")
     }
@@ -347,7 +364,15 @@ function App() {
       setOption4Color("btn-success")
     }
     if (ans == correctOption) {
-      setScore(score + 1)
+      if (time >= 8) {
+        setScore(score + 3)
+      }
+      else if (time >= 5) {
+        setScore(score + 2)
+      }
+      else {
+        setScore(score + 1)
+      }
       setStatus(1)
     }
     else {
@@ -383,6 +408,8 @@ function App() {
     setOption3Color("btn-secondary");
     setOption4(data[newQuestion][newOptions[3]]);
     setOption4Color("btn-secondary");
+    setTime(10);
+    setStop(false);
 }
 
   const handleRestart = () => {
@@ -416,13 +443,14 @@ function App() {
       <br />
       <div className="row px-4">
         <div className="col"><p className='text-start lead'>Question: {number}/15</p></div>
+        <div className="col"><p className='text-center lead'>Remaining Time: {time} sec</p></div>
         <div className="col"><p className='text-end lead'>Score: {score}</p></div>
       </div>
       <br />
       <div className="text-center">
         <img src={imgPath[data[question]["Building ID"]]} className="img-fluid" height="600px" width="600px"/>
         <br /><br />
-        <h2 className={status == 1 ? "text-success lead" : status == 2 ? "text-danger lead" : "text-white lead"}>{status == 1 ? "Correct! (+1 Point)" : status == 2 ? "Incorrect! (+0 Points)" : ""}</h2>
+        <h2 className={status == 1 ? "text-success lead" : status == 2 ? "text-danger lead" : "text-white lead"}>{(status == 1 && time >= 8) ? "Correct! (+3 Points)" : (status == 1 && time >= 5) ? "Correct! (+2 Points)" : status == 1 ? "Correct! (+1 Point)" : status == 2 ? "Incorrect! (+0 Points)" : ""}</h2>
         <h1 className="lead">{data[question]["Trivia Question"]}</h1>
         <br />
         <div className="row">
