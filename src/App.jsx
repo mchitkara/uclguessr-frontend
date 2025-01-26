@@ -410,12 +410,12 @@ function App() {
   
   return (
     <>
-      <nav className="navbar navbar-expand-lg text-secondary bg-primary p-3">
+      <nav className="navbar navbar-expand-lg text-secondary p-3" style={{ backgroundColor: '#500778' }}>
         <h1 className="navbar-brand text-white" href="#">UCLGuessr</h1>
       </nav>
       <br />
       <div className="row px-4">
-      <div className="col"><p className='text-start lead'>Question: {number}/15</p></div>
+        <div className="col"><p className='text-start lead'>Question: {number}/15</p></div>
         <div className="col"><p className='text-end lead'>Score: {score}</p></div>
       </div>
       <br />
@@ -428,10 +428,10 @@ function App() {
         <div className="row">
           <div className="col"></div><div className="col"></div><div className="col"></div>
           <div className="col">
-            <button className={`btn ${option1Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(1)}>{option1}</button>
+            <button className={`btn h-100 ${option1Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(1)}>{option1}</button>
           </div>
           <div className="col">
-            <button className={`btn ${option2Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(2)}>{option2}</button>
+            <button className={`btn h-100 ${option2Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(2)}>{option2}</button>
           </div>
           <div className="col"></div><div className="col"></div><div className="col"></div>
         </div>
@@ -439,10 +439,10 @@ function App() {
         <div className="row">
           <div className="col"></div><div className="col"></div><div className="col"></div>
           <div className="col">
-            <button className={`btn ${option3Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(3)}>{option3}</button>
+            <button className={`btn h-100 ${option3Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(3)}>{option3}</button>
           </div>
           <div className="col">
-            <button className={`btn ${option4Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(4)}>{option4}</button>
+            <button className={`btn h-100 ${option4Color} ${status != 0 && "disabled"}`} aria-disabled="true" onClick={() => handleAnswer(4)}>{option4}</button>
           </div>
           <div className="col"></div><div className="col"></div><div className="col"></div>
         </div>
